@@ -2,6 +2,7 @@ package main;
 
 import main.Java.model.Dice;
 import main.Java.service.DiceRoller;
+import main.Java.service.RollResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<String> todasRolagens = new ArrayList<>();
+        List<RollResult> todasRolagens = new ArrayList<>();
 
         System.out.println("=== Rolador de Dados ===");
 
@@ -65,10 +66,9 @@ public class Main {
             System.out.print("Digite a dificuldade (mínimo para sucesso): ");
             int dificuldade = scanner.nextInt();
 
-            // Faz a rolagem (o método atual imprime o resultado)
-            DiceRoller.rollDice(dado, quantidade, modificador, dificuldade);
-            String resumo = "Rolagem: dado=" + dado.getSides() + ", quantidade=" + quantidade + ", modificador=" + modificador + ", dificuldade=" + dificuldade;
-            todasRolagens.add(resumo);
+            // Faz a rolagem e guarda o resultado
+            RollResult resultado = DiceRoller.rollDice(dado, quantidade, modificador, dificuldade);
+            todasRolagens.add(resultado);
 
             // Pergunta se quer continuar
             System.out.print("\nDeseja fazer outra rolagem? (s/n): ");
@@ -79,10 +79,14 @@ public class Main {
         }
 
         System.out.println("\n=== Resumo Final ===");
-        for (String r : todasRolagens) {
+        int somaTotalAcumulada = 0;
+        for (RollResult r : todasRolagens) {
             System.out.println(r);
+            somaTotalAcumulada += r.getSomaTotal();
             System.out.println("--------------------");
         }
+
+        System.out.println("Soma total de todas as rolagens: " + somaTotalAcumulada);
 
         scanner.close();
     }
