@@ -37,6 +37,7 @@ public class DiceGUI extends JFrame {
         JTextField modField = new JTextField("0", 3);
         JTextField difField = new JTextField("10", 3);
         JButton rolarBtn = new JButton("Rolar");
+        JButton resetBtn = new JButton("Limpar");
 
         painel.add(new JLabel("Dado:"));
         painel.add(comboDados);
@@ -47,6 +48,7 @@ public class DiceGUI extends JFrame {
         painel.add(new JLabel("Dif:"));
         painel.add(difField);
         painel.add(rolarBtn);
+        painel.add(resetBtn);
 
         add(painel, BorderLayout.NORTH);
 
@@ -92,6 +94,15 @@ public class DiceGUI extends JFrame {
 
                 totalAcumulado += resultado.getSomaTotal();
                 totalAcumuladoLabel.setText("Total acumulado: " + totalAcumulado);
+            }
+        });
+
+        resetBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                totalAcumulado = 0;
+                totalAcumuladoLabel.setText("Total acumulado: 0");
+                resultadoArea.setText("");
             }
         });
     }
